@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 
     private bool topTouch;
     private bool bottomTouch;
+    private float touchTopTimer = 0;
+    private float touchBottomTimer = 0;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -41,37 +43,44 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(downKey)) {
             rb.velocity = new Vector2(rb.velocity.x, -moveSpeed);
         }
-      
-        topTouch = false;
-        bottomTouch = false;
+
+        if (topTouch == true && bottomTouch == true &&
+            touchTopTimer > 1 && touchBottomTimer > 1) {
+            touchTopTimer = 0;
+            touchBottomTimer = 0;
+            transform.position = new Vector3(-6f, 2.5f, 0);
+
+        }
+
+
+
+
     }
 
     // Wall bounce
     private void OnCollisionEnter2D(Collision2D collision) {
-        if ((collision.gameObject.tag == "wallTop")&& (collision.gameObject.tag == "wallBottom")) {
-            Debug.Log("RIP RESPAWN!");
-            transform.position = new Vector3(-6f, 2.5f, 0);
-        }
-
-
-        /*if (collision.gameObject.tag == "wallTop"){
+        if (collision.gameObject.tag == "wallTop") {
             topTouch = true;
-            Debug.Log("RIP RESPAWN!");
-            transform.position = new Vector3(-6f, 2.5f, 0);
+            touchTopTimer = 5;
+            Debug.Log("touched TOP!");
         }
-
-        if (collision.gameObject.tag == "wallBottom"){
+        if (collision.gameObject.tag == "wallBottom") {
             bottomTouch = true;
-            transform.position = new Vector3(-6f, 2.5f, 0);
-        }*/
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if ((collision.gameObject.tag == "wallTop") && (collision.gameObject.tag == "wallBottom")) {
-            Debug.Log("RIP RESPAWN!");
-            transform.position = new Vector3(-6f, 2.5f, 0);
+            touchBottomTimer = 5;
+            Debug.Log("touched BOTTOM!");
         }
     }
+
+    /*private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "wallTop") {
+            topTouch = true;
+            Debug.Log("touched TOP!");
+        }
+        if (collision.gameObject.tag == "wallBottom") {
+            bottomTouch = true;
+            Debug.Log("touched BOTTOM!");
+        }
+    }*/
 
 }
 
