@@ -7,6 +7,8 @@ TagManager:
   - wallTop
   - wallBottom
   - bounceMe
+  - goal
+  - deathZone
   layers:
   - Default
   - TransparentFX

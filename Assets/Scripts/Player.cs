@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     public KeyCode rightKey = KeyCode.RightArrow;
@@ -20,7 +21,11 @@ public class Player : MonoBehaviour {
     private Animator anim;
 
     public float deathTimer = 0;
-   
+    float timer = 0;
+    bool tick = false;
+
+
+
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -52,6 +57,17 @@ public class Player : MonoBehaviour {
 
         }
 
+        timer += Time.deltaTime;
+        //Debug.Log(timer);
+            if(timer > 1) {
+            timer = 0;
+            tick = true;
+        }
+
+        if(tick == true) {
+            GameManager.instance.score++;
+            tick = false;
+        }
 
 
 
@@ -71,16 +87,15 @@ public class Player : MonoBehaviour {
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.tag == "wallTop") {
-            topTouch = true;
-            Debug.Log("touched TOP!");
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "goal") {
+            SceneManager.LoadScene("End");
+            Debug.Log("goal!!!");
         }
-        if (collision.gameObject.tag == "wallBottom") {
-            bottomTouch = true;
-            Debug.Log("touched BOTTOM!");
+        if (collision.gameObject.tag == "deathZone") {
+            transform.position = new Vector3(-6f, 2.5f, 0);
         }
-    }*/
+    }
 
 }
 
