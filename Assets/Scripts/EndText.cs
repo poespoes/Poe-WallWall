@@ -15,9 +15,10 @@ public class EndText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _myText.text = "You took " + GameManager.instance.score + " secs!";
+        _myText.text = "You took " + GameManager.instance.score + " secs!" + "    Best Time:" + GameManager.instance.highScore + " secs!";
 
         if (Input.GetKeyDown(KeyCode.R)) {
+            GameManager.instance.score = 0;
             SceneManager.LoadScene("Main");
         }
     }

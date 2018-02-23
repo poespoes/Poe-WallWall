@@ -14,6 +14,6 @@ public class ScoreText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _myText.text = "Time: " + GameManager.instance.score + " Secs";
+        _myText.text = "Time: " + GameManager.instance.score + " Secs" + "    Best Time: " + GameManager.instance.highScore + " Secs";
     }
 }

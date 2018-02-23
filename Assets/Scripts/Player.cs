@@ -24,17 +24,27 @@ public class Player : MonoBehaviour {
     float timer = 0;
     bool tick = false;
 
+    private float jumpTimer = 0;
+    bool jumpStop = false;
 
 
     // Use this for initialization
     void Start() {
+        //GameManager.instance.score = 0;
+
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update() {
-
+        if (jumpStop == true) {
+            jumpTimer += Time.deltaTime;
+        }
+        if (jumpTimer > 0.9f) {
+            jumpTimer = 0;
+            jumpStop = false;
+        }
 
         if (Input.GetKey(rightKey)) {
             rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
@@ -42,8 +52,9 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(leftKey)) {
             rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
         }
-        if (Input.GetKeyDown(upKey)) {
+        if ((Input.GetKeyDown(upKey)) && jumpStop == false) {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            jumpStop = true;
         }
         if (Input.GetKeyDown(downKey)) {
             rb.velocity = new Vector2(rb.velocity.x, -moveSpeed);
@@ -89,8 +100,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "goal") {
-            SceneManager.LoadScene("End");
-            Debug.Log("goal!!!");
+            GameManager.instance.endGame();
         }
         if (collision.gameObject.tag == "deathZone") {
             transform.position = new Vector3(-6f, 2.5f, 0);
