@@ -38,6 +38,7 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        
         if (jumpStop == true) {
             jumpTimer += Time.deltaTime;
         }
@@ -64,7 +65,7 @@ public class Player : MonoBehaviour {
             touchTopTimer > 1 && touchBottomTimer > 1) {
             touchTopTimer = 0;
             touchBottomTimer = 0;
-            transform.position = new Vector3(-6f, 2.5f, 0);
+            transform.position = new Vector3(-141f, -184f, 0);
 
         }
 
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour {
             GameManager.instance.endGame();
         }
         if (collision.gameObject.tag == "deathZone") {
-            transform.position = new Vector3(-6f, 2.5f, 0);
+            transform.position = new Vector3(-141f, -184f, 0);
         }
     }
 
